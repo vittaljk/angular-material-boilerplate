@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// Importing material icons
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+@import "~@angular/material/theming";
+@include mat-core();
+
+@import "./styles/themes/primary.scss";
+@import "./styles/themes/secondary.scss";
+@import "./styles/themes/dark.scss";
+
+// Custom components theme
+@import "./app/home/parent/parent.component.scss-theme";
+
+.primary-theme {
+    @include angular-material-theme($my-app-theme);
+    @include parent-component-theme($my-app-theme);
+}
+
+.secondary-theme {
+    @include angular-material-theme($alternate-theme);
+    @include parent-component-theme($alternate-theme);
+}
+
+.dark-theme {
+    @include angular-material-theme($my-dark-theme);
+    @include parent-component-theme($my-dark-theme);
+}
+
+.mat-card {
+    margin: 10px 0;
+}
+
+// custom components theme mixin
+@mixin my-components-theme($theme) {
+    @include parent-component-theme($theme);
+}
+
+
+// typography
+$my-typography: mat-typography-config(
+    $font-family: 'Avenir'
+);
+
+@include mat-core($my-typography);
+
+// *********************************************
+// Customizing Angular Material component styles
+
+// button.mat-raised-button {
+//     @include mat-elevation(10);
+// }
+$config: mat-typography-config(
+    $font-family: 'Verdana'
+);
+
+.unicorn-header {
+    font-size: mat-font-size($config, headline);
+    font-family: mat-font-family($config);
+}

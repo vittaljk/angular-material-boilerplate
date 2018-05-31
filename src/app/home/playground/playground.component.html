@@ -1,0 +1,84 @@
+<div [class]="theme">
+    <h3>Table demo</h3>
+    <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+            <input (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </div>
+        <mat-table #mytable [dataSource]="dataSource" matSort>
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </mat-cell>
+                <input type="text" [(ngModel)]="binding">
+            </ng-container>
+
+            <!-- data columns -->
+            <span *ngFor="let displayedColumn of displayedColumns; let i = index">
+                <ng-container [matColumnDef]="displayedColumn" *ngIf="i > 0 && i <= 4">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{displayedColumn}} </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element[displayedColumn]}} </mat-cell>
+                </ng-container>
+            </span>
+
+            <!-- actions column -->
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef>
+                    Actions
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <mat-icon>mood</mat-icon>
+                    <mat-icon>mood</mat-icon>
+                    <mat-icon>mood</mat-icon>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row); selected(row)"></mat-row>
+        </mat-table>
+        <mat-paginator #myPaginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+    </div>
+
+    <h3>Grid demo</h3>
+    <mat-card>
+        <mat-grid-list cols="2" rowHeight="fit" gutterSize="10px">
+            <mat-grid-tile>1</mat-grid-tile>
+            <mat-grid-tile>2</mat-grid-tile>
+            <mat-grid-tile>3</mat-grid-tile>
+            <mat-grid-tile>4</mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+
+    <mat-card>
+        <button mat-raised-button color="primary">
+            Primary
+        </button>
+        <button mat-raised-button color="accent">
+            Accent
+        </button>
+        <button mat-raised-button color="warn">
+            Warning
+        </button>
+    </mat-card>
+
+    <mat-card>
+        <div class="select-container">
+            <mat-select placeholder="Select theme" [(ngModel)]="theme" name="item">
+                <mat-option value="primary-theme">Primary theme <mat-icon>mood</mat-icon></mat-option>
+                <mat-option value="secondary-theme">Secondary theme</mat-option>
+                <mat-option value="dark-theme">Dark theme</mat-option>
+            </mat-select>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <app-parent>
+            <h1>NG content h1</h1>
+        </app-parent>
+    </mat-card>
+</div>
+
